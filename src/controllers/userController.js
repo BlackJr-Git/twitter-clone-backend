@@ -1,7 +1,13 @@
-import data from "../../assets/initial-data.json" assert { type: 'json' };
+import data from "../../assets/initial-data.json" assert { type: "json" };
 
+let userData = data.users;
+function findUserById(id) {
+  return userData.find((user) => user.id === +id);
+}
 
-let userData = data.tweets
+function findUserIndex(id) {
+  return userData.findIndex((article) => article.id === +id);
+}
 
 /*
 --------------------------
@@ -10,7 +16,14 @@ the database.
 --------------------------
 */
 async function getOneUser(req, res, next) {
-  return res.send("One user");
+  const { userId } = req.params;
+  let user = findUserById(userId);
+  if (user) {
+    return res.send(user);
+  }
+  return res
+    .status(404)
+    .send(`L'utilisateur avec l'id : ${userId} n'existe pas`);
 }
 
 /*
@@ -30,7 +43,10 @@ in the database
 --------------------------
 */
 async function createUser(req, res, next) {
-  return res.send("User is Created");
+  const newUser = req.body;
+
+  userData.push(newUser);
+  return res.status(200).send(userData[userData.length - 1]);
 }
 
 /*
@@ -51,7 +67,16 @@ in the request
 --------------------------
 */
 async function deleteUser(req, res, next) {
-  return res.send("User is deleted");
+  const { userId } = req.params;
+  const userIndex = findUserIndex(userId);
+  if (userIndex < 0) {
+    return res
+      .status(404)
+      .send(`L'utilisateur avec l'id ${userId} n'existe pas`);
+  } else {
+    const user = userData.splice(userIndex, 1)[0];
+    return res.status(202).send(user);
+  }
 }
 
 /*
@@ -61,7 +86,8 @@ the database.
 --------------------------
 */
 async function deleteAllUsers(req, res, next) {
-  return res.send("Users are deleted");
+  userData = [];
+  return res.send("All Users have been deleted");
 }
 
 export {

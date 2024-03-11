@@ -1,13 +1,13 @@
-import data from "../../assets/initial-data.json" assert { type: 'json' };
+import data from "../../assets/initial-data.json" assert { type: "json" };
 
-const tweetData = data.tweets 
+const tweetData = data.tweets;
 
 function findTweetById(id) {
-    return tweetData.find((tweet) => tweet.id === +id);
+  return tweetData.find((tweet) => tweet.id === +id);
 }
 
 function findTweetIndex(id) {
-    return tweetData.findIndex((article) => article.id === +id);
+  return tweetData.findIndex((article) => article.id === +id);
 }
 /*
 --------------------------
@@ -16,12 +16,12 @@ the database.
 --------------------------
 */
 async function getOneTweet(req, res, next) {
-    const { TweetId } = req.params
-    let tweet = findTweetById(TweetId)
-    if (tweet) {
-        return res.send(tweet);
-    }
-    return res.status(404).send(`Le tweet avec l'id : ${TweetId} n'existe pas`);
+  const { TweetId } = req.params;
+  let tweet = findTweetById(TweetId);
+  if (tweet) {
+    return res.send(tweet);
+  }
+  return res.status(404).send(`Le tweet avec l'id : ${TweetId} n'existe pas`);
 }
 
 /*
@@ -31,7 +31,13 @@ async function getOneTweet(req, res, next) {
   --------------------------
   */
 async function getAllTweets(req, res, next) {
-  return res.send(tweetData);
+  let { number, pages } = req.query;
+  pages = pages || 1;
+  number = number || 10;
+  const firstIndex = (+pages - 1) * number;
+  const lasIndex = +pages * number;
+  const tweets = tweetData.slice(firstIndex, lasIndex);
+  return res.send(tweets);
 }
 
 /*
@@ -41,7 +47,10 @@ async function getAllTweets(req, res, next) {
   --------------------------
   */
 async function createTweet(req, res, next) {
-  return res.send("Tweet is Created");
+  const newTweet = req.body;
+
+  userData.push(newTweet);
+  return res.status(201).send(userData[userData.length - 1]);
 }
 
 /*
@@ -62,7 +71,15 @@ async function updateTweet(req, res, next) {
   --------------------------
   */
 async function deleteTweet(req, res, next) {
-  return res.send("Tweet is deleted");
+  const { TweetId } = req.params;
+  const tweetIndex = findTweetIndex(TweetId);
+  const tweet = findTweetById(TweetId);
+  if (tweetIndex < 0) {
+    return res.status(404).send(`L'article avec l'id ${TweetId} n'existe pas`);
+  } else {
+    tweetData.splice(tweetIndex, 1);
+    return res.status(202).send(tweet);
+  }
 }
 
 /*
@@ -72,7 +89,8 @@ async function deleteTweet(req, res, next) {
   --------------------------
   */
 async function deleteAllTweets(req, res, next) {
-  return res.send("Tweets are deleted");
+  tweetData = [];
+  return res.send("All Tweets have been deleted");
 }
 
 export {
