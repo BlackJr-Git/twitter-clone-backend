@@ -60,7 +60,16 @@ async function createTweet(req, res, next) {
   --------------------------
   */
 async function updateTweet(req, res, next) {
-  return res.send("Tweet is updated");
+  const tweet = req.body;
+  const { TweetId } = req.params;
+  const tweetIndex = findTweetIndex(TweetId);
+  if (tweetIndex < 0) {
+    tweetData.push(tweet);
+    return res.status(201).send(tweetData[tweetData.length - 1]);
+  } else {
+    tweetData[tweetIndex] = tweet;
+    return res.status(200).send(tweetData[tweetIndex]);
+  }
 }
 
 /*

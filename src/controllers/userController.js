@@ -56,7 +56,16 @@ in the request
 --------------------------
 */
 async function updateUser(req, res, next) {
-  return res.send("User is updated");
+  const user = req.body;
+  const { userId } = req.params;
+  const userIndex = findUserIndex(userId);
+  if (userIndex < 0) {
+    userData.push(user);
+    return res.status(201).send(userData[userData.length - 1]);
+  } else {
+    userData[userIndex] = user;
+    return res.status(200).send(userData[userIndex]);
+  }
 }
 
 /*
