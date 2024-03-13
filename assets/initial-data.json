@@ -3,8 +3,8 @@
   "users": [
     {
       "id": 1,
-      "handle": "@perkins",
-      "name": "Kenya Buck",
+      "handle": "@devjr",
+      "name": "Junior Asosa",
       "followersCount": 218,
       "followingCount": 153,
       "profilePicture": "https://i.pravatar.cc/300?img=10",
@@ -704,7 +704,7 @@
     },
     {
       "id": 3,
-      "author": 0,
+      "author": 1,
       "media": [
         "https://picsum.photos/4779/2900.jpg"
       ],

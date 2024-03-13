@@ -6,6 +6,7 @@ import {
   getAllUsers,
   getOneUser,
   updateUser,
+  getOneUserByHandle
 } from "../controllers/userController.js";
 
 const userRouter = Router();
@@ -15,6 +16,9 @@ userRouter.get(`/`, getAllUsers);
 
 //Get one user by userId
 userRouter.get(`/:userId`, getOneUser);
+
+//Get one user by handle
+userRouter.get(`/userName/:userName`, getOneUserByHandle);
 
 //Create a new user
 userRouter.post(`/add`, createUser);

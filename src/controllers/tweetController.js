@@ -1,6 +1,7 @@
 import data from "../../assets/initial-data.json" assert { type: "json" };
 
 const tweetData = data.tweets;
+const userData = data.users
 
 function findTweetById(id) {
   return tweetData.find((tweet) => tweet.id === +id);
@@ -39,6 +40,32 @@ async function getAllTweets(req, res, next) {
   const tweets = tweetData.slice(firstIndex, lasIndex);
   return res.send(tweets);
 }
+
+/*
+  --------------------------
+  Retrieve all one user tweets from 
+  the database.
+  --------------------------
+  */
+  async function getUserTweets(req, res, next) {
+    const { userName } = req.params;
+    if (userName) {
+      let userId = userData.find((user)=> user.handle === userName ) 
+      const userTweets = tweetData.filter((tweet)=> tweet.author == userId.id )   
+      return res.send(userTweets);
+    } 
+    return res.status(404).send(`L'utilisateur avec le handle ${userName} n'existe pas`)
+  }
+
+  async function getUserMediaTweets(req, res, next) {
+    const { userName } = req.params;
+    if (userName) {
+      let userId = userData.find((user)=> user.handle === userName ) 
+      const userTweets = tweetData.filter((tweet)=> tweet.author == userId.id && tweet.media[0] )   
+      return res.send(userTweets);
+    } 
+    return res.status(404).send(`L'utilisateur avec le handle ${userName} n'existe pas`)
+  }
 
 /*
   --------------------------
@@ -105,17 +132,21 @@ async function deleteAllTweets(req, res, next) {
 export {
   createTweet,
   deleteAllTweets,
+  getUserTweets,
   deleteTweet,
   getAllTweets,
   getOneTweet,
   updateTweet,
+  getUserMediaTweets
 };
 
 export default {
   createTweet,
   deleteAllTweets,
+  getUserTweets,
   deleteTweet,
   getAllTweets,
   getOneTweet,
   updateTweet,
+  getUserMediaTweets
 };

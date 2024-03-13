@@ -5,6 +5,10 @@ function findUserById(id) {
   return userData.find((user) => user.id === +id);
 }
 
+function findUserByHandle(handle) {
+  return userData.find((user) => user.handle === handle);
+}
+
 function findUserIndex(id) {
   return userData.findIndex((article) => article.id === +id);
 }
@@ -24,6 +28,17 @@ async function getOneUser(req, res, next) {
   return res
     .status(404)
     .send(`L'utilisateur avec l'id : ${userId} n'existe pas`);
+}
+
+async function getOneUserByHandle(req, res, next) {
+  const { userName } = req.params;
+  let user = findUserByHandle(userName);
+  if (user) {
+    return res.send(user);
+  }
+  return res
+    .status(404)
+    .send(`L'utilisateur avec l'handle : ${userName} n'existe pas`);
 }
 
 /*
@@ -106,6 +121,7 @@ export {
   getAllUsers,
   getOneUser,
   updateUser,
+  getOneUserByHandle
 };
 
 export default {
@@ -115,4 +131,5 @@ export default {
   getAllUsers,
   getOneUser,
   updateUser,
+  getOneUserByHandle
 };
