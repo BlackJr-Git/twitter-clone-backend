@@ -76,8 +76,9 @@ async function getAllTweets(req, res, next) {
 async function createTweet(req, res, next) {
   const newTweet = req.body;
 
-  userData.push(newTweet);
-  return res.status(201).send(userData[userData.length - 1]);
+  newTweet.id = tweetData.length + 1
+  tweetData.push(newTweet);
+  return res.status(201).send(tweetData[tweetData.length - 1]);
 }
 
 /*

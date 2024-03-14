@@ -33,7 +33,7 @@ async function getOneUser(req, res, next) {
 async function getOneUserByHandle(req, res, next) {
   const { userName } = req.params;
   let user = findUserByHandle(userName);
-  if (user) {
+  if (user.id) {
     return res.send(user);
   }
   return res
