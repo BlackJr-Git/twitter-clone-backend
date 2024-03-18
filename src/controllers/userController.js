@@ -1,4 +1,6 @@
-import data from "../../assets/initial-data.json" assert { type: "json" };
+// import data from "../../assets/initial-data.json" assert { type: "json" };
+import data from "../../assets/data.json" assert { type: "json" };
+
 
 let userData = data.users;
 function findUserById(id) {

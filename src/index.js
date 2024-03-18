@@ -1,6 +1,7 @@
 import cors from "cors";
 // import dotenv from "dotenv";
 import express, { json } from "express";
+import fs from "fs"
 import {
   tweetsBaseURI,
   authBaseURI,
@@ -18,9 +19,34 @@ import {
 const app = express();
 const PORT = process.env.PORT || 3000;
 const corsOptions = {
-  origin: `http://localhost:${PORT}`,
+  origin: [`http://localhost:${PORT}`,"https://project-07-twitter-clone-junior-a2.vercel.app/, https://cadca209-2e34-4c41-aeab-db130155c4b3-00-3phjn8t8n3fs5.kirk.replit.dev/"]
 };
 // dotenv.config();
+
+const dataSourceFile = "assets/initial-data.json";
+const newDataSourceFile = "assets/data.json";
+
+const isDataExist = fs.existsSync(newDataSourceFile)
+
+if (isDataExist) {
+  console.log("le fichier de donnée existe");
+} else {
+  fs.readFile(dataSourceFile, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Une erreur est survenue lors de la lecture du fichier:', err);
+      return;
+    }
+    
+    fs.writeFile(newDataSourceFile, data, (err) => {
+      if (err) {
+        console.error('Une erreur est survenue lors de la création du nouveau fichier:', err);
+        return;
+      }
+  
+      console.log('Le contenu a été copié avec succès dans le nouveau fichier.');
+    });
+  });
+}
 
 // Config
 app.use(json());
