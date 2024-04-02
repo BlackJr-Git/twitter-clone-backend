@@ -19,7 +19,7 @@ import {
 const app = express();
 const PORT = process.env.PORT || 3000;
 const corsOptions = {
-  origin: [`http://localhost:${PORT}`,"https://project-07-twitter-clone-junior-a2.vercel.app/, https://cadca209-2e34-4c41-aeab-db130155c4b3-00-3phjn8t8n3fs5.kirk.replit.dev/"]
+  origin: ["*"]
 };
 // dotenv.config();
 

@@ -1,5 +1,5 @@
 // import data from "../../assets/initial-data.json" assert { type: "json" };
-import data from "../../assets/data.json" assert { type: "json" };
+import data from "../../assets/initial-data.json" assert { type: "json" };
 
 const tweetData = data.tweets;
 const userData = data.users;
