@@ -1,5 +1,5 @@
 import cors from "cors";
-// import dotenv from "dotenv";
+import dotenv from "dotenv";
 import express, { json } from "express";
 import fs from "fs"
 import {
@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3000;
 const corsOptions = {
   origin: ["*"]
 };
-// dotenv.config();
+dotenv.config();
 
 const dataSourceFile = "assets/initial-data.json";
 const newDataSourceFile = "assets/data.json";
