@@ -7,13 +7,15 @@ import {
   getAllTweets,
   getOneTweet,
   updateTweet,
-  getUserMediaTweets
+  getUserMediaTweets,
 } from "../controllers/tweetController.js";
+
+import passport from "passport";
 
 const tweetRouter = Router();
 
 //Get all Tweets
-tweetRouter.get(`/`, getAllTweets);
+tweetRouter.get(`/`, passport.authenticate("local"), getAllTweets);
 
 //Get all users Tweets
 tweetRouter.get(`/:userName/tweets`, getUserTweets);
